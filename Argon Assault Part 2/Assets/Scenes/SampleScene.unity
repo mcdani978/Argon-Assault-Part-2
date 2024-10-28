@@ -725,6 +725,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9150206361541301797, guid: 4ce230707fdd03f40ad38b534af974b1, type: 3}
+      propertyPath: maxSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150206361541301797, guid: 4ce230707fdd03f40ad38b534af974b1, type: 3}
+      propertyPath: moveSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150206361541301797, guid: 4ce230707fdd03f40ad38b534af974b1, type: 3}
+      propertyPath: acceleration
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150206361541301797, guid: 4ce230707fdd03f40ad38b534af974b1, type: 3}
+      propertyPath: deceleration
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150206361541301797, guid: 4ce230707fdd03f40ad38b534af974b1, type: 3}
       propertyPath: movement.m_Name
       value: Movement
       objectReference: {fileID: 0}

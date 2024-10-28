@@ -6,7 +6,12 @@ using UnityEngine.InputSystem;
 public class PlayerControls : MonoBehaviour
 {
     [SerializeField] InputAction movement;
-    [SerializeField] float moveSpeed = 10f; 
+    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float acceleration = 5f; // Acceleration factor
+    [SerializeField] float deceleration = 5f; // Deceleration factor
+    [SerializeField] float maxSpeed = 15f; // Maximum speed limit
+
+    private Vector2 currentSpeed = Vector2.zero; // Stores current movement speed
 
     // Start is called before the first frame update
     void Start()
@@ -24,17 +29,31 @@ public class PlayerControls : MonoBehaviour
         movement.Disable();
     }
 
-    
+    // Update is called once per frame
     void Update()
     {
-        float xThrow = movement.ReadValue<Vector2>().x;
-        float yThrow = movement.ReadValue<Vector2>().y; 
+        Vector2 inputVector = movement.ReadValue<Vector2>();
 
-        float xOffset = xThrow * moveSpeed * Time.deltaTime;
-        float yOffset = yThrow * moveSpeed * Time.deltaTime; 
+        // Smooth acceleration for the x and y axes
+        currentSpeed.x = Mathf.MoveTowards(currentSpeed.x, inputVector.x * maxSpeed, acceleration * Time.deltaTime);
+        currentSpeed.y = Mathf.MoveTowards(currentSpeed.y, inputVector.y * maxSpeed, acceleration * Time.deltaTime);
+
+        // Deceleration if no input is detected
+        if (inputVector.x == 0)
+        {
+            currentSpeed.x = Mathf.MoveTowards(currentSpeed.x, 0, deceleration * Time.deltaTime);
+        }
+
+        if (inputVector.y == 0)
+        {
+            currentSpeed.y = Mathf.MoveTowards(currentSpeed.y, 0, deceleration * Time.deltaTime);
+        }
+
+        float xOffset = currentSpeed.x * Time.deltaTime;
+        float yOffset = currentSpeed.y * Time.deltaTime;
 
         float newPosX = transform.localPosition.x + xOffset;
-        float newPosY = transform.localPosition.y + yOffset; 
+        float newPosY = transform.localPosition.y + yOffset;
 
         transform.localPosition = new Vector3(newPosX, newPosY, transform.localPosition.z);
     }
