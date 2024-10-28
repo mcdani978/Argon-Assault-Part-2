@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
-{ 
-
+{
     [SerializeField] InputAction movement;
+    [SerializeField] float moveSpeed = 10f; // Added speed multiplier
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     void OnEnable()
@@ -24,17 +24,14 @@ public class PlayerControls : MonoBehaviour
         movement.Disable();
     }
 
-
     // Update is called once per frame
     void Update()
     {
-        float horizontalthrow = movement.ReadValue<Vector2>().x;
-        float verticalthrow = movement.ReadValue<Vector2>().y;
+        float xThrow = movement.ReadValue<Vector2>().x;
 
-        //float horizontalthrow = Input.GetAxis("Horizontal");
-        Debug.Log(horizontalthrow);
+        float xOffset = xThrow * moveSpeed * Time.deltaTime;
+        float newPosX = transform.localPosition.x + xOffset;
 
-        //float verticalthrow = Input.GetAxis("Vertical");
-        Debug.Log(verticalthrow);
+        transform.localPosition = new Vector3(newPosX, transform.localPosition.y, transform.localPosition.z);
     }
 }
